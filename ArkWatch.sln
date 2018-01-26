@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2005
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArkWatch.Models", "ArkWatch.Models\ArkWatch.Models.csproj", "{49155A09-14A3-4E9A-BEA9-FC3435065F19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArkWatch.ServerQuery", "ArkWatch.ServerQuery\ArkWatch.ServerQuery.csproj", "{9083A007-28DE-4E4B-8C94-62602CC650F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArkWatch.Sandbox.QueryTest", "ArkWatch.Sandbox.QueryTest\ArkWatch.Sandbox.QueryTest.csproj", "{A68B3721-403D-4E77-888A-8C096DBF70AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArkWatch.Storage", "ArkWatch.Storage\ArkWatch.Storage.csproj", "{A7FF0B4F-B1E4-4949-8E23-FC016F1B7FBC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArkWatch.UI", "ArkWatch.UI\ArkWatch.UI.csproj", "{9B0B8B2C-C034-46C0-83C1-E46758074141}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{49155A09-14A3-4E9A-BEA9-FC3435065F19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49155A09-14A3-4E9A-BEA9-FC3435065F19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49155A09-14A3-4E9A-BEA9-FC3435065F19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49155A09-14A3-4E9A-BEA9-FC3435065F19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9083A007-28DE-4E4B-8C94-62602CC650F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9083A007-28DE-4E4B-8C94-62602CC650F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9083A007-28DE-4E4B-8C94-62602CC650F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9083A007-28DE-4E4B-8C94-62602CC650F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A68B3721-403D-4E77-888A-8C096DBF70AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A68B3721-403D-4E77-888A-8C096DBF70AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A68B3721-403D-4E77-888A-8C096DBF70AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A68B3721-403D-4E77-888A-8C096DBF70AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7FF0B4F-B1E4-4949-8E23-FC016F1B7FBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7FF0B4F-B1E4-4949-8E23-FC016F1B7FBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7FF0B4F-B1E4-4949-8E23-FC016F1B7FBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7FF0B4F-B1E4-4949-8E23-FC016F1B7FBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B0B8B2C-C034-46C0-83C1-E46758074141}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B0B8B2C-C034-46C0-83C1-E46758074141}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B0B8B2C-C034-46C0-83C1-E46758074141}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B0B8B2C-C034-46C0-83C1-E46758074141}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {40FC5427-A1C3-4112-9CE4-AAEDCFB39256}
+	EndGlobalSection
+EndGlobal
