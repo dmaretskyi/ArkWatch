@@ -43,11 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Impl\BinaryReaderExtensions.cs" />
-    <Compile Include="Impl\GameServer.cs" />
-    <Compile Include="Impl\MasterServer.cs" />
-    <Compile Include="Impl\PlayerInfo.cs" />
-    <Compile Include="Impl\ServerInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerQuery.cs" />
     <Compile Include="ServerQueryException.cs" />
