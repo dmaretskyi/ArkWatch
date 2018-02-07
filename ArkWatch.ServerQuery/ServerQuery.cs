@@ -85,10 +85,10 @@ namespace ArkWatch.ServerQuery
                         br.ReadByte(); // type byte, not needed
 
                         networkVersion = br.ReadByte();
-                        name = br.ReadAnsiString();
-                        map = br.ReadAnsiString();
-                        gameDirectory = br.ReadAnsiString();
-                        gameDescription = br.ReadAnsiString();
+                        name = br.ReadUTF8String();
+                        map = br.ReadUTF8String();
+                        gameDirectory = br.ReadUTF8String();
+                        gameDescription = br.ReadUTF8String();
                         appId = br.ReadInt16();
                         playerCount = br.ReadByte();
                         maximumPlayerCount = br.ReadByte();
@@ -97,7 +97,7 @@ namespace ArkWatch.ServerQuery
                         os = (OperatingSystem)br.ReadByte();
                         requiresPassword = br.ReadByte() == 0x01;
                         vacSecured = br.ReadByte() == 0x01;
-                        gameVersion = br.ReadAnsiString();
+                        gameVersion = br.ReadUTF8String();
                         var edf = (ExtraDataFlags)br.ReadByte();
 
                         if (edf.HasFlag(ExtraDataFlags.GamePort)) port = br.ReadInt16();
@@ -105,9 +105,9 @@ namespace ArkWatch.ServerQuery
                         if (edf.HasFlag(ExtraDataFlags.SpectatorInfo))
                         {
                             spectatorPort = br.ReadInt16();
-                            spectatorName = br.ReadAnsiString();
+                            spectatorName = br.ReadUTF8String();
                         }
-                        if (edf.HasFlag(ExtraDataFlags.GameTagData)) gameTagData = br.ReadAnsiString();
+                        if (edf.HasFlag(ExtraDataFlags.GameTagData)) gameTagData = br.ReadUTF8String();
                         if (edf.HasFlag(ExtraDataFlags.GameID)) gameId = br.ReadUInt64().ToString();
                     }
 
@@ -129,14 +129,14 @@ namespace ArkWatch.ServerQuery
                         for (int index = 0; index < numPlayers; index++)
                         {
                             byte idx = br.ReadByte();
-                            var playerName = br.ReadAnsiString();
+                            var playerName = br.ReadUTF8String();
                             var playerScore = br.ReadInt32();
                             var playerTimeConnected = TimeSpan.FromSeconds(br.ReadSingle());
                             players.Add(new PlayerInfo(playerName));
                         }
                     }
 
-                    return new ServerInfo(name, players);
+                    return new ServerInfo(name, players.Where(p => !string.IsNullOrWhiteSpace(p.Name)));
                 }
             }
             catch (Exception e)
@@ -222,7 +222,7 @@ namespace ArkWatch.ServerQuery
             return rv;
         }
 
-        private static string ReadAnsiString(this BinaryReader br)
+        private static string ReadUTF8String(this BinaryReader br)
         {
             var stringBytes = new List<byte>();
             byte charByte;
@@ -230,7 +230,7 @@ namespace ArkWatch.ServerQuery
             {
                 stringBytes.Add(charByte);
             }
-            return Encoding.ASCII.GetString(stringBytes.ToArray());
+            return Encoding.UTF8.GetString(stringBytes.ToArray());
         }
     }
 }

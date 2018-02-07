@@ -13,12 +13,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Text="Loading.." Margin="2, 4" Name="Status"/>
-        <ItemsControl Name="PlayerOnline" Grid.Row="1" Margin="2,4">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type models:PlayerInfo}">
-                    <TextBlock Text="{Binding Name}"/>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <ItemsControl Name="GroupsOnline" Grid.Row="1" Margin="2,4" />
     </Grid>
 </UserControl>
+

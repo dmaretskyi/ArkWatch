@@ -18,31 +18,32 @@ using ReactiveUI;
 namespace ArkWatch.UI.Views
 {
     /// <summary>
-    /// Interaction logic for ActivePlayersView.xaml
+    /// Interaction logic for ActivePlayerGroupView.xaml
     /// </summary>
-    public partial class ActivePlayersView : UserControl, IViewFor<ActivePlayersViewModel>
+    public partial class ActivePlayerGroupView : UserControl, IViewFor<ActivePlayerGroupViewModel>
     {
-        public ActivePlayersView()
+        public ActivePlayerGroupView()
         {
             InitializeComponent();
 
-            this.OneWayBind(ViewModel, vm => vm.GroupsOnline, v => v.GroupsOnline.ItemsSource);
-            this.OneWayBind(ViewModel, vm => vm.Status, v => v.Status.Text);
+            this.OneWayBind(ViewModel, vm => vm.Name, v => v.GroupName.Text);
+            this.OneWayBind(ViewModel, vm => vm.NumberMembersOnline, v => v.NumberMemberOnline.Text);
+            this.OneWayBind(ViewModel, vm => vm.MembersOnline, v => v.Members.ItemsSource);
         }
 
         public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register(
-            "ViewModel", typeof(ActivePlayersViewModel), typeof(ActivePlayersView), new PropertyMetadata(default(ActivePlayersViewModel)));
+            "ViewModel", typeof(ActivePlayerGroupViewModel), typeof(ActivePlayerGroupView), new PropertyMetadata(default(ActivePlayerGroupViewModel)));
 
-        public ActivePlayersViewModel ViewModel
+        public ActivePlayerGroupViewModel ViewModel
         {
-            get { return (ActivePlayersViewModel) GetValue(ViewModelProperty); }
+            get { return (ActivePlayerGroupViewModel) GetValue(ViewModelProperty); }
             set { SetValue(ViewModelProperty, value); }
         }
 
         object IViewFor.ViewModel
         {
             get { return ViewModel; }
-            set { ViewModel = (ActivePlayersViewModel) value; }
+            set { ViewModel = (ActivePlayerGroupViewModel) value; }
         }
     }
 }
