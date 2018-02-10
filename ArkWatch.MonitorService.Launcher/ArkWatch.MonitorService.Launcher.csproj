@@ -4,27 +4,29 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B00EAF7F-E002-4E07-AA56-91E0445FC0C8}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ArkWatch.MonitorService</RootNamespace>
-    <AssemblyName>ArkWatch.MonitorService</AssemblyName>
+    <ProjectGuid>{57C51BE1-4A7D-4743-8473-7612C3B9FA16}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ArkWatch.MonitorService.Launcher</RootNamespace>
+    <AssemblyName>ArkWatch.MonitorService.Launcher</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>$(SolutionDir)\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>$(SolutionDir)\bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -38,19 +40,22 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="Topshelf, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Topshelf.4.0.3\lib\net452\Topshelf.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Monitor.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ArkWatch.Models\ArkWatch.Models.csproj">
-      <Project>{49155A09-14A3-4E9A-BEA9-FC3435065F19}</Project>
-      <Name>ArkWatch.Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ArkWatch.ServerQuery\ArkWatch.ServerQuery.csproj">
-      <Project>{9083A007-28DE-4E4B-8C94-62602CC650F2}</Project>
-      <Name>ArkWatch.ServerQuery</Name>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ArkWatch.MonitorService\ArkWatch.MonitorService.csproj">
+      <Project>{b00eaf7f-e002-4e07-aa56-91e0445fc0c8}</Project>
+      <Name>ArkWatch.MonitorService</Name>
     </ProjectReference>
     <ProjectReference Include="..\ArkWatch.Storage\ArkWatch.Storage.csproj">
       <Project>{A7FF0B4F-B1E4-4949-8E23-FC016F1B7FBC}</Project>
@@ -58,4 +63,8 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
 </Project>

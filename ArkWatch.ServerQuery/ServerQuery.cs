@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
 using ArkWatch.Models;
@@ -45,7 +46,7 @@ namespace ArkWatch.ServerQuery
         private static readonly byte A2S_PLAYER = 0x55;
         private static readonly byte A2S_RULES = 0x56;
 
-        public static async Task<ServerInfo> Query(IPEndPoint address, IObserver<string> progress)
+        public static async Task<ServerInfo> Query(IPEndPoint address, IObserver<string> progress = null)
         {
             try
             {
@@ -54,7 +55,7 @@ namespace ArkWatch.ServerQuery
                     client.Client.SendTimeout = (int)500;
                     client.Client.ReceiveTimeout = (int)500;
 
-                    progress.OnNext("Connecting..");
+                    progress?.OnNext("Connecting..");
 
                     client.Connect(address);
 
@@ -81,16 +82,16 @@ namespace ArkWatch.ServerQuery
                     string gameTagData;
                     string gameId;
 
-                    progress.OnNext("Sending info request..");
+                    progress?.OnNext("Sending info request..");
 
                     await Send(client, A2S_INFO);
 
-                    progress.OnNext("Waiting for server info..");
+                    progress?.OnNext("Waiting for server info..");
 
                     var infoData = await Receive(client, address);
                     using (var br = new BinaryReader(new MemoryStream(infoData)))
                     {
-                        progress.OnNext("Recieving server info..");
+                        progress?.OnNext("Recieving server info..");
 
                         br.ReadByte(); // type byte, not needed
 
@@ -121,22 +122,22 @@ namespace ArkWatch.ServerQuery
                         if (edf.HasFlag(ExtraDataFlags.GameID)) gameId = br.ReadUInt64().ToString();
                     }
 
-                    progress.OnNext("Sending challenge requset..");
+                    progress?.OnNext("Sending challenge requset..");
 
                     await Send(client, A2S_SERVERQUERY_GETCHALLENGE);
 
-                    progress.OnNext("Recieving challange data..");
+                    progress?.OnNext("Recieving challange data..");
 
                     challengeBytes = await Receive(client, address);
                     if (challengeBytes[0] != 0x41) throw new Exception("Unable to retrieve challenge data");
 
                     challengeBytes[0] = A2S_PLAYER;
 
-                    progress.OnNext("Sending player list request..");
+                    progress?.OnNext("Sending player list request..");
 
                     await Send(client, challengeBytes);
 
-                    progress.OnNext("Waiting for player list..");
+                    progress?.OnNext("Waiting for player list..");
 
                     var playerData = await Receive(client, address);
 
@@ -144,7 +145,7 @@ namespace ArkWatch.ServerQuery
 
                     using (var br = new BinaryReader(new MemoryStream(playerData)))
                     {
-                        progress.OnNext("Recieving player list..");
+                        progress?.OnNext("Recieving player list..");
 
                         if (br.ReadByte() != 0x44) throw new Exception("Invalid data received in response to A2S_PLAYER request");
                         var numPlayers = br.ReadByte();

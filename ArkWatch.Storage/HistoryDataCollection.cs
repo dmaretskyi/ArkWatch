@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ArkWatch.Models;
 
 namespace ArkWatch.Storage
 {
@@ -15,9 +16,20 @@ namespace ArkWatch.Storage
 
         public List<HistoryData> Recordings { get; }
 
-        public HistoryData FindByServerAddress(string address)
+        public HistoryData Find(string address)
         {
             return Recordings.FirstOrDefault(r => r.ServerAddress == address);
+        }
+
+        public HistoryData FindOrCreate(string address)
+        {
+            var recording = Recordings.FirstOrDefault(r => r.ServerAddress == address);
+            if (recording == null)
+            {
+                recording = new HistoryData(address, Enumerable.Empty<HistoryRecord>());
+                Recordings.Add(recording);
+            }
+            return recording;
         }
     }
 }

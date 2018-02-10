@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using ArkWatch.Models;
@@ -21,33 +22,44 @@ namespace ArkWatch.Storage
 
         public HistoryDataCollection LoadData()
         {
+            if (!Directory.Exists(Path))
+            {
+                SaveData(new HistoryDataCollection(Enumerable.Empty<HistoryData>()));
+            }
+
             var files = Directory.GetFiles(Path);
 
             var recordings = files
                 .Where(file => file.Substring(file.Length - 4, 4) == ".csv")
-                .Select(file =>
-                {
-                    var address = file.Substring(0, file.Length - 4);
-                    var records = File.ReadAllLines(System.IO.Path.Combine(Path, file))
-                        .Select(line =>
-                        {
-                            var parts = line.Split(Separator);
-                            var time = DateTime.Parse(parts[0]);
-                            return new HistoryRecord(time, parts.Skip(1));
-                        });
-                    return new HistoryData(address, records);
-                });
-
-            
+                .Select(file => LoadDataFromFile(file));
 
             return new HistoryDataCollection(recordings);
         }
 
+        private HistoryData LoadDataFromFile(string file)
+        {
+            var filename = file.Split('/').Last();
+            var address = filename.Substring(0, filename.Length - 4).Replace("_", ":");
+            var records = File.ReadAllLines(file)
+                .Select(line =>
+                {
+                    var parts = line.Split(Separator);
+                    var time = DateTime.Parse(parts[0]);
+                    return new HistoryRecord(time, parts.Skip(1));
+                });
+            return new HistoryData(address, records);
+        }
+
         public void SaveData(HistoryDataCollection data)
         {
+            if (!Directory.Exists(Path))
+            {
+                Directory.CreateDirectory(Path);
+            }
+
             foreach (var dataRecording in data.Recordings)
             {
-                SaveDataFile(System.IO.Path.Combine(Path, $"{dataRecording.ServerAddress}.csv"), dataRecording);
+                SaveDataFile(System.IO.Path.Combine(Path, $"{dataRecording.ServerAddress.Replace(":", "_")}.csv"), dataRecording);
             }
         }
 

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArkWatch.UI", "ArkWatch.UI\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArkWatch.MonitorService", "ArkWatch.MonitorService\ArkWatch.MonitorService.csproj", "{B00EAF7F-E002-4E07-AA56-91E0445FC0C8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArkWatch.MonitorService.Launcher", "ArkWatch.MonitorService.Launcher\ArkWatch.MonitorService.Launcher.csproj", "{57C51BE1-4A7D-4743-8473-7612C3B9FA16}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{B00EAF7F-E002-4E07-AA56-91E0445FC0C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B00EAF7F-E002-4E07-AA56-91E0445FC0C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B00EAF7F-E002-4E07-AA56-91E0445FC0C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57C51BE1-4A7D-4743-8473-7612C3B9FA16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57C51BE1-4A7D-4743-8473-7612C3B9FA16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57C51BE1-4A7D-4743-8473-7612C3B9FA16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57C51BE1-4A7D-4743-8473-7612C3B9FA16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
