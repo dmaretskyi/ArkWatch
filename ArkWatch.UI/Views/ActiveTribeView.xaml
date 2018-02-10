@@ -7,21 +7,23 @@
              xmlns:models="clr-namespace:ArkWatch.Models;assembly=ArkWatch.Models"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Expander Background="White">
-        <Expander.Header>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Name="TribeName" Text="AdventureTime" FontWeight="Bold" Margin="4"/>
-                <TextBlock Name="NumberMemberOnline" Text="2" Margin="16,4,0,4" FontWeight="Bold"/>
-                <TextBlock Text="/" Margin="2,4" FontWeight="Bold"/>
-                <TextBlock Name="NumberMemberTotal" Text="4" Margin="0,4" FontWeight="Bold"/>
-            </StackPanel>
-        </Expander.Header>
-        <ItemsControl Margin="16,4,4,4" Name="Members">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type models:Player}">
-                    <TextBlock Text="{Binding Name}"/>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-    </Expander>
+    <Border Background="White">
+        <StackPanel>
+            <Border Margin="4, 8" Background="LightGray">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Name="TribeName" Text="AdventureTime" FontWeight="Bold" Margin="4"/>
+                    <TextBlock Name="NumberMemberOnline" Text="2" Margin="16,4,0,4" FontWeight="Bold"/>
+                    <TextBlock Text="/" Margin="2,4" FontWeight="Bold"/>
+                    <TextBlock Name="NumberMemberTotal" Text="4" Margin="0,4" FontWeight="Bold"/>
+                </StackPanel>
+            </Border>
+            <ItemsControl Margin="16,4,4,4" Name="Members">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type models:Player}">
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </Border>
 </UserControl>

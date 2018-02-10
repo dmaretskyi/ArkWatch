@@ -6,20 +6,23 @@
              xmlns:local="clr-namespace:ArkWatch.UI.Views"
              xmlns:models="clr-namespace:ArkWatch.Models;assembly=ArkWatch.Models"
              mc:Ignorable="d" 
+             HorizontalContentAlignment="Stretch"
              d:DesignHeight="300" d:DesignWidth="300">
-    <Expander Background="White">
-        <Expander.Header>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Name="GroupName" Text="Solo players" FontWeight="Bold" Margin="4"/>
-                <TextBlock Name="NumberMemberOnline" Text="2" Margin="16,4,0,4" FontWeight="Bold"/>
-            </StackPanel>
-        </Expander.Header>
-        <ItemsControl Margin="16,4,4,4" Name="Members">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type models:Player}">
-                    <TextBlock Text="{Binding Name}"/>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-    </Expander>
+    <Border Background="White" HorizontalAlignment="Stretch">
+        <StackPanel>
+            <Border Margin="4, 8" Background="LightGray" HorizontalAlignment="Stretch">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Name="GroupName" Text="Solo players" FontWeight="Bold" Margin="4"/>
+                    <TextBlock Name="NumberMemberOnline" Text="2" Margin="16,4,0,4" FontWeight="Bold"/>
+                </StackPanel>
+            </Border>
+            <ItemsControl Margin="16,4,4,4" Name="Members">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type models:Player}">
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+      </Border>
 </UserControl>

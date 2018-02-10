@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ArkWatch.UI.Views"
              xmlns:models="clr-namespace:ArkWatch.Models;assembly=ArkWatch.Models"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
+             HorizontalContentAlignment="Stretch"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.RowDefinitions>
@@ -13,7 +14,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Text="Loading.." Margin="2, 4" Name="Status"/>
-        <ItemsControl Name="GroupsOnline" Grid.Row="1" Margin="2,4" />
+        <ItemsControl Name="GroupsOnline" Grid.Row="1" Margin="2,4" HorizontalAlignment="Stretch"/>
     </Grid>
 </UserControl>
 

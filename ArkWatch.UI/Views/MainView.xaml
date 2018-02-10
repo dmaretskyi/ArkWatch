@@ -23,6 +23,6 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <reactiveUi:ViewModelViewHost  Grid.Row="1" Name="ActiveServerDisplay" />
+        <reactiveUi:ViewModelViewHost  Grid.Row="1" Name="ActiveServerDisplay" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"/>
     </Grid>
 </Window>
