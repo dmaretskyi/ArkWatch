@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using ArkWatch.Models;
 using ArkWatch.Storage;
 using ReactiveUI;
@@ -29,9 +30,11 @@ namespace ArkWatch.UI.ViewModels
         
         public ActivePlayersViewModel(Server server, IObservable<StorageData> data)
         {
+            var statusSubject = new Subject<string>();
+
             _server = server ?? throw new ArgumentNullException(nameof(server));
 
-            QueryServerInfo = ReactiveCommand.CreateFromTask(() => ServerQuery.ServerQuery.Query(_server.GetIpEndPoint()));
+            QueryServerInfo = ReactiveCommand.CreateFromTask(() => ServerQuery.ServerQuery.Query(_server.GetIpEndPoint(), statusSubject));
 
             data.ToPropertyEx(this, x => x.Data);
 
@@ -45,12 +48,20 @@ namespace ArkWatch.UI.ViewModels
                 .ToPropertyEx(this, x => x.CurrentServerInfo);
 
             Observable.Merge(
-                QueryServerInfo
-                    .ThrownExceptions
-                    .Select(ex => $"Error: ex.Message"),
-                this.WhenAnyValue(x => x.CurrentServerInfo)
-                    .Select(info => info != null ? $"Players online: {info.Players.Count(player => !string.IsNullOrWhiteSpace(player.Name))}" : "Loading..")
-            )
+                    QueryServerInfo
+                        .ThrownExceptions
+                        .Select(ex => $"Error: ex.Message"),
+                    this.WhenAnyValue(x => x.CurrentServerInfo)
+                        .Select(info =>
+                            info != null
+                                ? $"Players online: {info.Players.Count(player => !string.IsNullOrWhiteSpace(player.Name))}"
+                                : "Loading..")
+                )
+                .ObserveOn(DispatcherScheduler.Current)
+                .Subscribe(statusSubject);
+
+            statusSubject
+                .ObserveOn(DispatcherScheduler.Current)
                 .ToPropertyEx(this, x => x.Status);
 
             this.WhenAnyValue(x => x.CurrentServerInfo, x => x.Data)
