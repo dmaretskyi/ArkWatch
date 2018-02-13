@@ -12,38 +12,39 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ArkWatch.UI.ViewModels;
+using LiveCharts;
 using ReactiveUI;
 
 namespace ArkWatch.UI.Views
 {
     /// <summary>
-    /// Interaction logic for MainView.xaml
+    /// Interaction logic for HistoryView.xaml
     /// </summary>
-    public partial class MainView : IViewFor<MainViewModel>
+    public partial class HistoryView : Window, IViewFor<HistoryViewModel>
     {
-        public MainView()
+        public HistoryView()
         {
             InitializeComponent();
 
             this.OneWayBind(ViewModel, vm => vm.Servers, v => v.ServerSelect.ItemsSource);
             this.Bind(ViewModel, vm => vm.SelectedServer, v => v.ServerSelect.SelectedItem);
-            this.OneWayBind(ViewModel, vm => vm.ServerInfo, v => v.ActiveServerDisplay.ViewModel);
-            this.BindCommand(ViewModel, vm => vm.OpenHistory, v => v.OpenHistoryBtn);
+            this.OneWayBind(ViewModel, vm => vm.Chart, v => v.Chart.Series);
+            this.OneWayBind(ViewModel, vm => vm.Labels, v => v.XAxis.Labels);
         }
 
         public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register(
-            "ViewModel", typeof(MainViewModel), typeof(MainView), new PropertyMetadata(default(MainViewModel)));
+            "ViewModel", typeof(HistoryViewModel), typeof(HistoryView), new PropertyMetadata(default(HistoryViewModel)));
 
-        public MainViewModel ViewModel
+        public HistoryViewModel ViewModel
         {
-            get { return (MainViewModel) GetValue(ViewModelProperty); }
+            get { return (HistoryViewModel) GetValue(ViewModelProperty); }
             set { SetValue(ViewModelProperty, value); }
         }
 
         object IViewFor.ViewModel
         {
             get { return ViewModel; }
-            set { ViewModel = (MainViewModel) value; }
+            set { ViewModel = (HistoryViewModel) value; }
         }
     }
 }

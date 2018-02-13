@@ -38,7 +38,7 @@ namespace ArkWatch.Storage
 
         private HistoryData LoadDataFromFile(string file)
         {
-            var filename = file.Split('/').Last();
+            var filename = file.Split('\\').Last();
             var address = filename.Substring(0, filename.Length - 4).Replace("_", ":");
             var records = File.ReadAllLines(file)
                 .Select(line =>

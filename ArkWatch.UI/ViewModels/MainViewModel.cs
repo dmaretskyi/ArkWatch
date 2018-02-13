@@ -6,6 +6,7 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using ArkWatch.Models;
 using ArkWatch.Storage;
+using ArkWatch.UI.Views;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -27,6 +28,8 @@ namespace ArkWatch.UI.ViewModels
         public Server SelectedServer { get; set; }
 
         public ActivePlayersViewModel ServerInfo { [ObservableAsProperty] get; }
+
+        public ReactiveCommand OpenHistory { get; }
 
         public MainViewModel(IStorageProvider storageProvider)
         {
@@ -54,6 +57,10 @@ namespace ArkWatch.UI.ViewModels
                     Data = _storageProvider.LoadData();
                 });
 
+            OpenHistory = ReactiveCommand.Create(() =>
+            {
+                new HistoryView {ViewModel = new HistoryViewModel()}.Show();
+            });
         }
     }
 }

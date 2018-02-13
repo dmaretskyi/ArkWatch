@@ -13,16 +13,23 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <ComboBox Name="ServerSelect" Margin="2, 4">
-            <ComboBox.ItemTemplate>
-                <DataTemplate DataType="{x:Type models:Server}">
-                    <StackPanel>
-                        <TextBlock Text="{Binding Name}"/>
-                        <TextBlock Text="{Binding Address}" Foreground="Gray" FontWeight="Light"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <ComboBox Name="ServerSelect" Margin="2, 4">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type models:Server}">
+                        <StackPanel>
+                            <TextBlock Text="{Binding Name}"/>
+                            <TextBlock Text="{Binding Address}" Foreground="Gray" FontWeight="Light"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Button Margin="4" Padding="2" Content="History" VerticalAlignment="Center" Name="OpenHistoryBtn" Grid.Column="1"/>
+        </Grid>
         <reactiveUi:ViewModelViewHost  Grid.Row="1" Name="ActiveServerDisplay" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"/>
     </Grid>
 </Window>

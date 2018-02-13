@@ -1,0 +1,55 @@
+﻿<Window x:Class="ArkWatch.UI.Views.HistoryView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ArkWatch.UI.Views"
+        xmlns:models="clr-namespace:ArkWatch.Models;assembly=ArkWatch.Models"
+        xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="HistoryView" Height="300" Width="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <ComboBox Name="ServerSelect" Margin="2, 4">
+            <ComboBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type models:Server}">
+                    <StackPanel>
+                        <TextBlock Text="{Binding Name}"/>
+                        <TextBlock Text="{Binding Address}" Foreground="Gray" FontWeight="Light"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <wpf:CartesianChart Name="Chart" Grid.Row="1" Margin="2, 4">
+            <wpf:CartesianChart.AxisY>
+                <wpf:Axis LabelsRotation="20" Position="LeftBottom">
+                    <wpf:Axis.Labels>
+                        <x:Array Type="system:String">
+                            <system:String>Monday</system:String>
+                            <system:String>Tuesday</system:String>
+                            <system:String>Wednesday</system:String>
+                            <system:String>Thirsday</system:String>
+                            <system:String>Friday</system:String>
+                            <system:String>Saturday</system:String>
+                            <system:String>Sunday</system:String>
+                        </x:Array>
+                    </wpf:Axis.Labels>
+                    <wpf:Axis.Separator >
+                        <wpf:Separator Step="1"></wpf:Separator>
+                    </wpf:Axis.Separator>
+                </wpf:Axis>
+            </wpf:CartesianChart.AxisY>
+            <wpf:CartesianChart.AxisX>
+                <wpf:Axis LabelsRotation="20" Name="XAxis" Position="LeftBottom">
+                    <wpf:Axis.Separator >
+                        <wpf:Separator Step="1"></wpf:Separator>
+                    </wpf:Axis.Separator>
+                </wpf:Axis>
+            </wpf:CartesianChart.AxisX>
+        </wpf:CartesianChart>
+    </Grid>
+</Window>
