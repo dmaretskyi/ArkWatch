@@ -7,11 +7,14 @@ using System.Timers;
 using System.Threading.Tasks;
 using ArkWatch.Models;
 using ArkWatch.Storage;
+using NLog;
 
 namespace ArkWatch.MonitorService
 {
     public class Monitor
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         private readonly Timer _timer;
         private readonly IStorageProvider _storage;
         private readonly IHistoryStorageProvider _historyStorage;
@@ -40,7 +43,7 @@ namespace ArkWatch.MonitorService
 
                 foreach (var server in data.Servers)
                 {
-                    Console.WriteLine($"[{DateTime.Now}] Requesting {server.Address}");
+                    logger.Debug("Requesting {0}", server.Address);
 
                     var info = ServerQuery.ServerQuery.Query(server.GetIpEndPoint()).Result;
                     history.FindOrCreate(server.Address).Records
@@ -49,7 +52,7 @@ namespace ArkWatch.MonitorService
                     var newPlayers = info.Players.Where(player => data.Players.All(p => p.Name != player.Name))
                         .Select(player => new Player(player.Name, ""));
 
-                    Console.WriteLine($"[{DateTime.Now}] Record {server.Address}: {info.Players.Count} players");
+                    Console.WriteLine("Record {0}: {1} players", server.Address, info.Players.Count);
 
                     foreach (var player in newPlayers)
                     {
@@ -62,7 +65,7 @@ namespace ArkWatch.MonitorService
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                logger.Error(e);
             }
 
             recordRunning = false;
@@ -72,15 +75,15 @@ namespace ArkWatch.MonitorService
         {
             _timer.Start();
 
-            Console.WriteLine("Service started");
-            Console.WriteLine($"Working dir: {Directory.GetCurrentDirectory()}");
-            Console.WriteLine($"Record interval: {Interval}");
+            logger.Info("Service started");
+            logger.Debug("Working dir: {0}", Directory.GetCurrentDirectory());
+            logger.Debug("Record interval: {0}", Interval);
         }
 
         public void Stop()
         {
             _timer.Stop();
-            Console.WriteLine("Service stopped");
+            logger.Info("Service stopped");
         }
 
         public TimeSpan Interval
