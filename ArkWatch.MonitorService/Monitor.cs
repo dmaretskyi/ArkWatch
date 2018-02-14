@@ -27,41 +27,18 @@ namespace ArkWatch.MonitorService
             _historyStorage = historyStorage ?? throw new ArgumentNullException(nameof(historyStorage));
 
             _timer = new Timer() {AutoReset = true, Interval = TimeSpan.FromMinutes(10).TotalMilliseconds};
-            _timer.Elapsed += (sender, args) => RecordData();
+            _timer.Elapsed += (sender, args) => OnTimer();
         }
 
 
-        private void RecordData()
+        private void OnTimer()
         {
             if(recordRunning) return;
             recordRunning = true;
 
             try
             {
-                var data = _storage.LoadData();
-                var history = _historyStorage.LoadData();
-
-                foreach (var server in data.Servers)
-                {
-                    logger.Debug("Requesting {0}", server.Address);
-
-                    var info = ServerQuery.ServerQuery.Query(server.GetIpEndPoint()).Result;
-                    history.FindOrCreate(server.Address).Records
-                        .Add(new HistoryRecord(DateTime.Now, info.Players.Select(p => p.Name)));
-
-                    var newPlayers = info.Players.Where(player => data.Players.All(p => p.Name != player.Name))
-                        .Select(player => new Player(player.Name, ""));
-
-                    Console.WriteLine("Record {0}: {1} players", server.Address, info.Players.Count);
-
-                    foreach (var player in newPlayers)
-                    {
-                        data.Players.Add(player);
-                    }
-                }
-
-                _storage.SaveData(data);
-                _historyStorage.SaveData(history);
+                RecordData();
             }
             catch (Exception e)
             {
@@ -69,6 +46,34 @@ namespace ArkWatch.MonitorService
             }
 
             recordRunning = false;
+        }
+
+        private void RecordData()
+        {
+            var data = _storage.LoadData();
+            var history = _historyStorage.LoadData();
+
+            foreach (var server in data.Servers)
+            {
+                logger.Debug("Requesting {0}", server.Address);
+
+                var info = ServerQuery.ServerQuery.Query(server.GetIpEndPoint()).Result;
+                history.FindOrCreate(server.Address).Records
+                    .Add(new HistoryRecord(DateTime.Now, info.Players.Select(p => p.Name)));
+
+                var newPlayers = info.Players.Where(player => data.Players.All(p => p.Name != player.Name))
+                    .Select(player => new Player(player.Name, ""));
+
+                logger.Debug("Record {0}: {1} players", server.Address, info.Players.Count);
+
+                foreach (var player in newPlayers)
+                {
+                    data.Players.Add(player);
+                }
+            }
+
+            _storage.SaveData(data);
+            _historyStorage.SaveData(history);
         }
 
         public void Start()

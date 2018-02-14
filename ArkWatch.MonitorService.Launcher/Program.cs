@@ -20,7 +20,8 @@ namespace ArkWatch.MonitorService.Launcher
                     s.WhenStarted(m => m.Start());                         
                     s.WhenStopped(m => m.Stop());                          
                 });
-                x.RunAsLocalSystem();                                      
+                x.RunAsLocalSystem();
+                x.StartAutomatically();
 
                 x.SetDescription("Monitors players on ARK servers and records history");                  
                 x.SetDisplayName("ARK Player Monitor");                                 
