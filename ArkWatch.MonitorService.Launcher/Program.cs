@@ -18,10 +18,13 @@ namespace ArkWatch.MonitorService.Launcher
                 {
                     s.ConstructUsing(name => new Monitor(new JsonStorageProvider("storage.json"), new HistoryStorageProvider("history/")));                
                     s.WhenStarted(m => m.Start());                         
-                    s.WhenStopped(m => m.Stop());                          
+                    s.WhenStopped(m => m.Stop());
+                    s.WhenPaused(m => m.Pause());
+                    s.WhenContinued(m => m.Continue());
                 });
                 x.RunAsLocalSystem();
                 x.StartAutomatically();
+                x.EnablePauseAndContinue();
 
                 x.SetDescription("Monitors players on ARK servers and records history");                  
                 x.SetDisplayName("ARK Player Monitor");                                 

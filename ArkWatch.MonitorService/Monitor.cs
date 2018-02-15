@@ -15,7 +15,7 @@ namespace ArkWatch.MonitorService
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        private readonly Timer _timer;
+        private Timer _timer;
         private readonly IStorageProvider _storage;
         private readonly IHistoryStorageProvider _historyStorage;
 
@@ -26,10 +26,14 @@ namespace ArkWatch.MonitorService
             _storage = storage ?? throw new ArgumentNullException(nameof(storage));
             _historyStorage = historyStorage ?? throw new ArgumentNullException(nameof(historyStorage));
 
-            _timer = new Timer() {AutoReset = true, Interval = TimeSpan.FromMinutes(10).TotalMilliseconds};
-            _timer.Elapsed += (sender, args) => OnTimer();
+            CreateTimer();
         }
 
+        private void CreateTimer()
+        {
+            _timer = new Timer() { AutoReset = true, Interval = TimeSpan.FromMinutes(10).TotalMilliseconds };
+            _timer.Elapsed += (sender, args) => OnTimer();
+        }
 
         private void OnTimer()
         {
@@ -78,17 +82,58 @@ namespace ArkWatch.MonitorService
 
         public void Start()
         {
-            _timer.Start();
+            TryStartTimer();
 
             logger.Info("Service started");
             logger.Debug("Working dir: {0}", Directory.GetCurrentDirectory());
             logger.Debug("Record interval: {0}", Interval);
         }
 
+        public void Pause()
+        {
+            TryStopTimer();
+        }
+
+        public void Continue()
+        {
+            TryStartTimer();
+        }
+
         public void Stop()
         {
-            _timer.Stop();
+            TryStopTimer();
             logger.Info("Service stopped");
+        }
+
+        private void TryStartTimer()
+        {
+            if (_timer == null)
+            {
+                CreateTimer();
+
+                logger.Error("Timer is null during start command");
+            }
+
+            try
+            {
+                _timer.Start();
+            }
+            catch (Exception e)
+            {
+                logger.Fatal(e);
+            }
+        }
+
+        private void TryStopTimer()
+        {
+            try
+            {
+                _timer.Stop();
+            }
+            catch (Exception e)
+            {
+                logger.Fatal(e);
+            }
         }
 
         public TimeSpan Interval
